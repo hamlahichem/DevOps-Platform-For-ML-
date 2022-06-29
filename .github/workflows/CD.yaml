@@ -46,7 +46,9 @@ jobs:
          
 
        - name: launch performance testing 
-         run: |
+         run: | 
+            cd $HOME
+            ls
             rm -r reportmy.html
             rm resultjmeter.csv
             ./apache-jmeter-5.5/bin/jmeter -n -t test_nginx_server_gcp.jmx  -l  resultjmeter.csv   -e -o reportmy.html
