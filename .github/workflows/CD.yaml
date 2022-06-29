@@ -27,16 +27,14 @@ jobs:
 #         run: |
 #          docker pull scbnf99/mlflow:latest
 #          docker images
-       - name: test sudo
-         run: pwd
-       - name: test sudo
-         run: ls
+
        - name: pull API image
          run: |
           sudo docker pull nginx
           sudo docker images
        - name: run docker image
          run: |
+            sudo docker rm -f nginx_server
             sudo docker run -di --name nginx_server -p 8080:80 nginx  
             
        - name: test docker is running 
