@@ -27,7 +27,11 @@ jobs:
 #         run: |
 #          docker pull scbnf99/mlflow:latest
 #          docker images
-
+       - name : some check
+         run: |
+            pwd
+            ls
+            
        - name: pull API image
          run: |
           sudo docker pull nginx
@@ -38,3 +42,10 @@ jobs:
             
        - name: test docker is running 
          run:  curl http://127.0.0.1:8080
+         
+
+       - name: launch performance testing 
+         run:  ./apache-jmeter-5.5/bin/jmeter -n -t test_nginx_server_gcp.jmx  -l  resultjmeter.csv   -e -o reportmy.html
+
+
+         
