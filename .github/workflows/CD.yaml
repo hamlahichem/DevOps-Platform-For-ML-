@@ -1,0 +1,43 @@
+name: deploy_API_image_on_ec2
+
+on:
+
+   pull_request:
+    branches: [ "develo" ]
+
+   workflow_dispatch:
+   
+#env: 
+#   docker_user: ${{ secrets.DOCKERHUB_USERNAME}}
+#   docker_password: ${{ secrets.DOCKERHUB_PASSWORD}}
+   
+jobs:
+   
+   pull_image:
+     #runs-on: ubuntu-latest
+     runs-on: self-hosted
+
+     steps:
+#       - uses: actions/checkout@v3
+
+#       - name: docker login
+#         run: |
+#            docker login -u $docker_user -p $docker_password
+#       - name: pull MLflow server image
+#         run: |
+#          docker pull scbnf99/mlflow:latest
+#          docker images
+       - name: test sudo
+         run: pwd
+       - name: test sudo
+         run: ls
+       - name: pull API image
+         run: |
+          docker pull nginx
+          docker images
+       - name: run docker image
+         run: |
+            docker run -di --name nginx_server -p 8080:80 nginx  
+            
+       - name: test docker is running 
+         run:  curl http://127.0.0.1:8080
