@@ -33,8 +33,8 @@ jobs:
          run: ls
        - name: pull API image
          run: |
-          docker pull nginx
-          docker images
+          sudo docker pull nginx
+          sudo docker images
        - name: run docker image
          run: |
             docker run -di --name nginx_server -p 8080:80 nginx  
