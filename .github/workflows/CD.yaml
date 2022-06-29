@@ -27,8 +27,9 @@ jobs:
 #         run: |
 #          docker pull scbnf99/mlflow:latest
 #          docker images
-       - name : some check
+       - name : initialization and some checks
          run: |
+            cd $HOME
             pwd
             ls
             
