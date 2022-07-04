@@ -22,7 +22,7 @@ jobs:
             aws-region: eu-west-1
        - name: start_staging_vm
          run: |
-            echo ${{staging_vm_id}}
+            echo $STAGING_VM_ID
             aws ec2 start-instances --instance-ids $STAGING_VM_ID
 
             
