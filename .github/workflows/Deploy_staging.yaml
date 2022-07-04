@@ -11,7 +11,7 @@ on:
 jobs:
    
    pull_image:
-     runs-on: self-hosted
+     runs-on: [self-hosted, farmy_aws]
 
      steps:
        - name: Configure AWS Credentials
