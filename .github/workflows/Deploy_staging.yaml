@@ -5,7 +5,7 @@ on:
    workflow_dispatch:
    
 env:
-  staging_vm_id: i-0761b0df18c056c1b
+  STAGING_VM_ID: i-0761b0df18c056c1b
  
    
 jobs:
@@ -23,7 +23,7 @@ jobs:
        - name: start_staging_vm
          run: |
             echo ${{staging_vm_id}}
-            aws ec2 start-instances --instance-ids ${{staging_vm_id}}
+            aws ec2 start-instances --instance-ids $STAGING_VM_ID
 
             
 #       - name: start staging_vm 
