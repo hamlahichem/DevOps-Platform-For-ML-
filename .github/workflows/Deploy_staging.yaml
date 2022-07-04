@@ -14,6 +14,20 @@ jobs:
      runs-on: self-hosted
 
      steps:
+       - name: Configure AWS Credentials
+         uses: aws-actions/configure-aws-credentials@v1
+         with:
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws-region: eu-west-1
+            
+       - name: AWS EC2 Start and Stop
+         uses: flyweightrocks/aws-ec2-action@v1
+         with:
+            instance-id: i-0761b0df18c056c1b
+            wait-instance-running: true
+            stop-instance: true      
+         
        - name : initialization and some checks
          run: |
             cd $HOME
