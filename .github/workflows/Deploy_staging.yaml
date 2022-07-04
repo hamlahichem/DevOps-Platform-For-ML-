@@ -21,7 +21,7 @@ jobs:
        - name: AWS EC2 Start and Stop
          uses: flyweightrocks/aws-ec2-action@v1
          with:
-            instance-id: i-0761b0df18c056c1b
+            instance-id: i-0444e8a732900883a
             wait-instance-running: true
             stop-instance: true      
          
