@@ -88,4 +88,20 @@ jobs:
             echo "upload report to s3/ un dossier avec le timestamp_staging" 
 
 
+   shutdown_staging_vm:
+      runs-on: [self-hosted, farmy_aws]
+      needs: [prepare_staging_vm, deploy_model_api_to_staging]
+      if: ${{ always() }}
+      
+      steps:
+         - name: stop staging vm
+           run:  aws ec2 stop-instances --instance-ids $STAGING_VM_ID
+
+ 
+      
+      
+      
+
+
+
          
