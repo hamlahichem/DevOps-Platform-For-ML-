@@ -3,6 +3,9 @@ name: deploy_API_Staging
 on:
 
    workflow_dispatch:
+   
+env:
+  staging_vm_id: i-0761b0df18c056c1b
  
    
 jobs:
@@ -17,14 +20,19 @@ jobs:
             aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             aws-region: eu-west-1
+       - name: start_staging_vm
+         run: |
+            echo ${{staging_vm_id}}
+            aws ec2 start-instances --instance-ids ${{staging_vm_id}}
+
             
-       - name: start staging_vm 
-         uses: flyweightrocks/aws-ec2-action@v1
-         with:
-            # staging machine
-            instance-id: i-0761b0df18c056c1b   
-            wait-instance-running: true
-            stop-instance: true     
+#       - name: start staging_vm 
+#         uses: flyweightrocks/aws-ec2-action@v1
+#         with:
+#            # staging machine
+#            instance-id: i-0761b0df18c056c1b   
+#            wait-instance-running: true
+#            stop-instance: true     
 
    
    deploy_model_api_to_staging:
