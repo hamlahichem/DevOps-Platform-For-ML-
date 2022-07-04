@@ -89,7 +89,7 @@ jobs:
 
 
    shutdown_staging_vm:
-      runs-on: [self-hosted, farmy_aws]
+      runs-on: ubuntu-latest
       needs: [prepare_staging_vm, deploy_model_api_to_staging]
       if: ${{ always() }}
       
