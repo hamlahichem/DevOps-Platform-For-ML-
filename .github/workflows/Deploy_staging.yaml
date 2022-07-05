@@ -95,7 +95,7 @@ jobs:
             cd $HOME
             rm -rf $HOME/staging_test_results/performance_report
             rm -f $HOME/staging_test_results/performance_test_model_api_result.csv
-            $JMETER_PATH/jmeter -n -t performance_test_model_api.jmx  -l  ~/staging_test_results/performance_test_model_api_result.csv   -e -o ~/staging_test_results/performance_report_model_api.html
+            ~/apache-jmeter-5.5/bin/jmeter -n -t $GITHUB_WORKSPACE/API/API_tests/performance_test_model_api.jmx  -l  ~/staging_test_results/performance_test_model_api_result.csv   -e -o ~/staging_test_results/performance_report_model_api.html
             
 
        - name: API deployed seccussfuly to staging please (verify performance report)
