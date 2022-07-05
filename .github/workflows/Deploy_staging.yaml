@@ -6,6 +6,7 @@ on:
    
 env:
   STAGING_VM_ID: i-0761b0df18c056c1b
+  JMETER_PATH: $HOME/apache-jmeter-5.5/bin # path to jmeter installation folder
  
    
 jobs:
@@ -75,9 +76,20 @@ jobs:
             sudo docker rm -f api_staging && sudo docker run -di --name api_staging -p 80:8080  khaldi22/api_imag  
             
          
+       - name: launch performance testing 
+ 
+         run: |
+            #run fonctionnel api test 
+            rm functionnel_test_result.csv
+            $JMETER_PATH/jmeter -n -t functionnel_testing_model_api.jmx  -l  functionnel_test_result.csv   
+
        - name: launch performance testing (faire un fichier special au api)
-         run: | 
+         run: |
+            rm -r performance_report
+            rm performance_result.csv
+            $JMETER_PATH/jmeter -n -t performance_test_model_api.jmx  -l  performance_test_model_api_result.csv   -e -o performance_report_model_api.html
             echo do_it_later
+            
             #cd $HOME
             #ls
             #rm -r reportmy.html
