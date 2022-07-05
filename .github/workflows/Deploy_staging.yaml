@@ -21,55 +21,25 @@ jobs:
             aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             aws-region: eu-west-1
-       - name: start_staging_vm
+       - name: start staging vm
          run: |
-            echo $STAGING_VM_ID
             aws ec2 start-instances --instance-ids $STAGING_VM_ID
-
-            
-#       - name: start staging_vm 
-#         uses: flyweightrocks/aws-ec2-action@v1
-#         with:
-#            # staging machine
-#            instance-id: i-0761b0df18c056c1b   
-#            wait-instance-running: true
-#            stop-instance: true     
-
    
    deploy_model_api_to_staging:
      needs: prepare_staging_vm
      runs-on: [self-hosted, farmy_aws]
 
      steps:
-       - name: Configure AWS Credentials
-         uses: aws-actions/configure-aws-credentials@v1
-         with:
-            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            aws-region: eu-west-1
-      
-#       - name: install aws cli
-#         uses: chrislennon/action-aws-cli@v1.1
-         
-#       - name: test aws cli  
-#         run: aws s3 ls
-#         env:
-#           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
+#       - name: Configure AWS Credentials
+#         uses: aws-actions/configure-aws-credentials@v1
+#         with:
+#            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#            aws-region: eu-west-1
             
- 
-         
-       - name : initialization and some checks
+       - name: pull model API image
          run: |
-            cd $HOME
-            pwd
-            ls
-            
-       - name: pull API image
-         run: |
-          sudo docker pull khaldi22/api_imag
-          sudo docker images
+          sudo docker pull khaldi22/api_imag # later pull latest staging image
           
        - name: Run model api docker 
          run: |
@@ -77,25 +47,19 @@ jobs:
             
        - uses: actions/checkout@v3
          with:
-           ref: hichem_CD
-       - name: info checkout
-         run: | 
-            echo $GITHUB_WORKSPACE
-            git branch -a 
-            git status
-       - name: launch fonctionnel testing 
-         run: |
-            cd $HOME
-            rm -f $HOME/staging_test_results/functionnel_test_result.csv
-            ~/apache-jmeter-5.5/bin/jmeter -n -t $GITHUB_WORKSPACE/API/API_tests/functionnel_testing_model_api.jmx  -l  ~/staging_test_results/functionnel_test_result.csv
-#$JMETER_PATH/jmeter -n -t functionnel_testing_model_api.jmx  -l  ~/staging_test_results/functionnel_test_result.csv   
+           ref: hichem_CD # later change it to develop
 
-       - name: launch performance testing (faire un fichier special au api)
+       - name: launch functionnel api testing 
          run: |
-            cd $HOME
+            rm -f ~/staging_test_results/functionnel_test_result.csv
+            $JMETER_PATH/jmeter -n -t $GITHUB_WORKSPACE/API/API_tests/functionnel_testing_model_api.jmx \
+            -l  ~/staging_test_results/functionnel_test_result.csv
+
+       - name: launch performance  api testing 
+         run: |
             rm -rf ~/staging_test_results/performance_report_model_api
             rm -f ~/staging_test_results/performance_test_model_api_result.csv
-            ~/apache-jmeter-5.5/bin/jmeter -n -t $GITHUB_WORKSPACE/API/API_tests/performance_test_model_api.jmx \
+            $JMETER_PATH/jmeter -n -t $GITHUB_WORKSPACE/API/API_tests/performance_test_model_api.jmx \
             -l  ~/staging_test_results/performance_test_model_api_result.csv   \
             -e -o ~/staging_test_results/performance_report_model_api
             
