@@ -5,9 +5,7 @@ on:
    workflow_dispatch:
    
 env:
-  STAGING_VM_ID: i-0761b0df18c056c1b
-  JMETER_PATH: ~/apache-jmeter-5.5/bin/jmeter # path to jmeter installation folder
- 
+  STAGING_VM_ID: i-0761b0df18c056c1b 
    
 jobs:
    prepare_staging_vm:
@@ -37,7 +35,7 @@ jobs:
           
        - name: Run model api docker 
          run: |
-            sudo docker rm -f api_staging && sudo docker run -di --name api_staging -p 80:8080  khaldi22/api_imag  
+            sudo docker rm -f api_staging && sudo docker run -di --name api_staging --restart always -p 80:8080  khaldi22/api_imag  
             
        - uses: actions/checkout@v3
          with:
