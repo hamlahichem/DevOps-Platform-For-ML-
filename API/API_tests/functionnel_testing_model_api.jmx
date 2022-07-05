@@ -30,7 +30,7 @@
           <collectionProp name="Arguments.arguments">
             <elementProp name="api_port" elementType="Argument">
               <stringProp name="Argument.name">api_port</stringProp>
-              <stringProp name="Argument.value">8080</stringProp>
+              <stringProp name="Argument.value">80</stringProp>
               <stringProp name="Argument.desc">the port of model api</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
