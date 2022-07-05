@@ -30,12 +30,6 @@ jobs:
      runs-on: [self-hosted, farmy_aws]
 
      steps:
-#       - name: Configure AWS Credentials
-#         uses: aws-actions/configure-aws-credentials@v1
-#         with:
-#            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#            aws-region: eu-west-1
             
        - name: pull model API image
          run: |
@@ -52,14 +46,16 @@ jobs:
        - name: launch functionnel api testing 
          run: |
             rm -f ~/staging_test_results/functionnel_test_result.csv
-            $JMETER_PATH -n -t $GITHUB_WORKSPACE/API/API_tests/functionnel_testing_model_api.jmx \
+            
+            ~/apache-jmeter-5.5/bin/jmeter -n -t $GITHUB_WORKSPACE/API/API_tests/functionnel_testing_model_api.jmx \
             -l  ~/staging_test_results/functionnel_test_result.csv
 
        - name: launch performance  api testing 
          run: |
             rm -rf ~/staging_test_results/performance_report_model_api
             rm -f ~/staging_test_results/performance_test_model_api_result.csv
-            $JMETER_PATH -n -t $GITHUB_WORKSPACE/API/API_tests/performance_test_model_api.jmx \
+            
+             ~/apache-jmeter-5.5/bin/jmeter -n -t $GITHUB_WORKSPACE/API/API_tests/performance_test_model_api.jmx \
             -l  ~/staging_test_results/performance_test_model_api_result.csv   \
             -e -o ~/staging_test_results/performance_report_model_api
             
