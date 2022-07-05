@@ -87,7 +87,7 @@ jobs:
          run: |
             cd $HOME
             rm -f $HOME/staging_test_results/functionnel_test_result.csv
-            $JMETER_PATH/jmeter -n -t $GITHUB_WORKSPACE/API/API_tests/functionnel_testing_model_api.jmx  -l  ~/staging_test_results/functionnel_test_result.csv
+            /home/ubuntu/apache-jmeter-5.5/bin/jmeter -n -t $GITHUB_WORKSPACE/API/API_tests/functionnel_testing_model_api.jmx  -l  ~/staging_test_results/functionnel_test_result.csv
 #$JMETER_PATH/jmeter -n -t functionnel_testing_model_api.jmx  -l  ~/staging_test_results/functionnel_test_result.csv   
 
        - name: launch performance testing (faire un fichier special au api)
