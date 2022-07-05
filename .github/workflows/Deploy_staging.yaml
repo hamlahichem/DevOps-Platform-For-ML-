@@ -6,7 +6,7 @@ on:
    
 env:
   STAGING_VM_ID: i-0761b0df18c056c1b
-  JMETER_PATH: ~/apache-jmeter-5.5/bin # path to jmeter installation folder
+  JMETER_PATH: ~/apache-jmeter-5.5/bin/jmeter # path to jmeter installation folder
  
    
 jobs:
@@ -52,14 +52,14 @@ jobs:
        - name: launch functionnel api testing 
          run: |
             rm -f ~/staging_test_results/functionnel_test_result.csv
-            $JMETER_PATH/jmeter -n -t $GITHUB_WORKSPACE/API/API_tests/functionnel_testing_model_api.jmx \
+            $JMETER_PATH -n -t $GITHUB_WORKSPACE/API/API_tests/functionnel_testing_model_api.jmx \
             -l  ~/staging_test_results/functionnel_test_result.csv
 
        - name: launch performance  api testing 
          run: |
             rm -rf ~/staging_test_results/performance_report_model_api
             rm -f ~/staging_test_results/performance_test_model_api_result.csv
-            $JMETER_PATH/jmeter -n -t $GITHUB_WORKSPACE/API/API_tests/performance_test_model_api.jmx \
+            $JMETER_PATH -n -t $GITHUB_WORKSPACE/API/API_tests/performance_test_model_api.jmx \
             -l  ~/staging_test_results/performance_test_model_api_result.csv   \
             -e -o ~/staging_test_results/performance_report_model_api
             
